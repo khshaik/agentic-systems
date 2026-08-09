@@ -25,6 +25,7 @@ CrewAI is a powerful framework for creating collaborative agent systems where mu
 | **This README** | Project, product, technical, functional, and operational overview |
 | [Agentic systems lifecycle](docs/agentic-systems-lifecycle.md) | The nine-stage AILaunchPad journey: what, why, how, and when |
 | [Agent architectures and framework landscape](docs/agent-architectures-and-frameworks.md) | Single vs. multi-agent guidance and a current framework comparison |
+| [From framework choice to CrewAI implementation](docs/crewai-framework-to-implementation.md) | Framework selection and a production-minded walkthrough of this CrewAI workflow |
 | [Executable notebook](crewai_multi_agent_content_workflow_colab.ipynb) | Safe-preview and opt-in live CrewAI implementation |
 
 ## What is this project?
