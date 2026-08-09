@@ -1,0 +1,918 @@
+/* ============================================================
+   goose workshop keynote
+   One light theme. Geist throughout. One structural accent,
+   plus a status palette used only inside terminal output.
+
+   Element defaults are styled directly, so plain markdown
+   renders correctly without wrapper divs. Helper classes
+   below are for the few things markdown cannot express.
+   ============================================================ */
+
+:root {
+  --font-sans: 'Geist', 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+
+  /* Surfaces */
+  --bg: #ffffff;
+  --surface: #f7f7f6;
+  --surface-hi: #eeeeeb;
+  --border: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.18);
+
+  /* Text. Darker than the usual light-theme pairing so body copy
+     survives a projector and a screen recording. */
+  --text: #101010;
+  --text-soft: #444444;
+  --text-faint: #767676;
+
+  /* One structural accent. Dark enough to clear 4.5:1 on white,
+     which the usual bright agent-blue does not. */
+  --accent: #0a58ca;
+  --accent-dim: rgba(10, 88, 202, 0.08);
+
+  /* Status palette. Terminal and metric output only, never chrome. */
+  --ok: #10713c;
+  --run: #9a5b00;
+  --fail: #c0271b;
+
+  /* Type scale, tuned to the 980x552 slide canvas */
+  --t-hero: 96px;
+  --t-title: 60px;
+  --t-section: 52px;
+  --t-head: 40px;
+  --t-lead: 22px;
+  --t-body: 19px;
+  --t-code: 15px;
+  --t-caption: 14px;
+  --t-eyebrow: 13px;
+
+  --radius: 8px;
+  --radius-sm: 6px;
+  --pad: 56px;
+
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur: 200ms;
+}
+
+/* Stop any dark letterboxing around the scaled slide canvas */
+html,
+body,
+#app,
+.slidev-page {
+  background: var(--bg);
+}
+
+/* ---------- Slide canvas ---------- */
+
+/* Near-white, not flat white. A single accent bloom in the top-right corner at
+   3.5% gives the page depth without reading as decoration. */
+.slidev-layout {
+  position: relative;
+  background:
+    radial-gradient(120% 85% at 100% 0%, rgba(10, 88, 202, 0.035) 0%, rgba(10, 88, 202, 0) 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: 1.55;
+  padding: var(--pad) var(--pad) 72px;
+}
+
+/* The opening and closing frames carry a little more of it. */
+.slidev-layout.cover {
+  background:
+    radial-gradient(85% 70% at 90% 10%, rgba(10, 88, 202, 0.075) 0%, rgba(10, 88, 202, 0) 60%),
+    var(--bg);
+}
+
+/* Zero the top margins at zero specificity, so `mt-*` utility classes
+   in the deck still win. A plain `margin: 0 0 X` here would outrank them. */
+.slidev-layout :where(h1, h2, h3, h4, p, ul, ol, blockquote, pre, table) {
+  margin-top: 0;
+}
+
+/* ---------- Headings ---------- */
+
+/* `text-wrap: balance` evens out the line lengths of a wrapped display heading
+   instead of leaving one orphan word on the last line. */
+.slidev-layout h1 {
+  font-size: var(--t-title);
+  font-weight: 600;
+  letter-spacing: -2px;
+  line-height: 1.03;
+  color: var(--text);
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+
+.slidev-layout h2 {
+  font-size: var(--t-head);
+  font-weight: 600;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+
+.slidev-layout h3 {
+  font-size: var(--t-lead);
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.slidev-layout h4 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+/* ---------- Body ---------- */
+
+.slidev-layout p {
+  color: var(--text-soft);
+  margin-bottom: 16px;
+  max-width: 66ch;
+}
+
+.slidev-layout strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.slidev-layout em {
+  color: var(--text);
+  font-style: normal;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 1px;
+}
+
+.slidev-layout a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-dim);
+}
+
+.slidev-layout ul,
+.slidev-layout ol {
+  color: var(--text-soft);
+  margin-bottom: 16px;
+  padding-left: 0;
+  list-style: none;
+  max-width: 66ch;
+}
+
+.slidev-layout li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 10px;
+}
+
+.slidev-layout ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.slidev-layout ol {
+  counter-reset: k;
+}
+
+.slidev-layout ol > li {
+  counter-increment: k;
+}
+
+.slidev-layout ol > li::before {
+  content: counter(k, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.16em;
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  color: var(--accent);
+}
+
+/* theme-default gives blockquotes a filled panel. Strip it back to a rule. */
+.slidev-layout blockquote {
+  background: transparent !important;
+  border: 0;
+  border-left: 2px solid var(--accent);
+  border-radius: 0;
+  padding: 2px 0 2px 24px;
+  margin-bottom: 16px;
+  /* px, not ch: the blockquote sits at body size while its child p is
+     display size, so a ch value here would resolve against the wrong font. */
+  max-width: 720px;
+}
+
+.slidev-layout blockquote p {
+  font-size: var(--t-head);
+  font-weight: 600;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  color: var(--text);
+  max-width: none;
+  margin-bottom: 0;
+}
+
+.slidev-layout hr {
+  border: 0;
+  height: 1px;
+  background: var(--border);
+  margin: 24px 0;
+}
+
+/* ---------- Code ---------- */
+
+.slidev-layout code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--surface-hi);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1px 5px;
+}
+
+.slidev-layout pre {
+  background: var(--surface) !important;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px !important;
+  font-size: var(--t-code);
+  line-height: 1.6;
+  overflow: hidden;
+}
+
+.slidev-layout pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* ---------- Tables ---------- */
+
+.slidev-layout table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82em;
+}
+
+.slidev-layout th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--text);
+  border-bottom: 1px solid var(--border-strong);
+  padding: 9px 12px 9px 0;
+  vertical-align: bottom;
+}
+
+.slidev-layout td {
+  color: var(--text-soft);
+  border-bottom: 1px solid var(--border);
+  padding: 9px 12px 9px 0;
+  vertical-align: top;
+}
+
+/* First column of a comparison matrix is a row label, not data */
+.matrix td:first-child,
+.matrix th:first-child {
+  color: var(--text);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* The column the slide is arguing for */
+.matrix th:nth-child(2),
+.matrix td:nth-child(2) {
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding-left: 12px;
+}
+
+/* ============================================================
+   Helper classes
+   ============================================================ */
+
+/* Small uppercase label above a heading, led by a short accent rule. The rule
+   is the same accent that carries every other structural cue in the deck. */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.eyebrow::before {
+  content: '';
+  flex: none;
+  width: 18px;
+  height: 2px;
+  background: var(--accent);
+}
+
+/* Larger intro sentence under a heading */
+.lead {
+  font-size: var(--t-lead);
+  line-height: 1.4;
+  color: var(--text-soft);
+  max-width: 52ch;
+}
+
+.caption {
+  font-size: var(--t-caption);
+  color: var(--text-faint);
+  line-height: 1.45;
+}
+
+.muted {
+  color: var(--text-soft);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+/* Reference line pinned to the foot of a slide. The right inset clears the
+   slide number that global-bottom.vue puts on the same baseline. */
+.ref {
+  position: absolute;
+  left: var(--pad);
+  right: var(--pad);
+  bottom: 22px;
+  padding-right: 54px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-faint);
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+/* ---------- Deck chrome (global-bottom.vue) ---------- */
+
+/* Progress rail along the very bottom edge of every slide but the first and
+   last. Two pixels: enough to read as progress, not enough to be a feature. */
+.deck-rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--border);
+  z-index: 20;
+}
+
+.deck-rail-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width var(--dur) var(--ease);
+}
+
+.deck-no {
+  position: absolute;
+  right: var(--pad);
+  bottom: 22px;
+  padding-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+  z-index: 20;
+}
+
+/* Cover and closing slides */
+.cover h1 {
+  font-size: var(--t-title);
+}
+
+/* Single-claim slide. The one moment the deck goes loud. */
+.statement h1 {
+  font-size: var(--t-hero);
+  letter-spacing: -3px;
+  line-height: 0.98;
+}
+
+/* Section divider */
+.section-num {
+  font-family: var(--font-mono);
+  font-size: var(--t-caption);
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.section h1 {
+  font-size: var(--t-section);
+  letter-spacing: -1.5px;
+}
+
+/* Hero statistic */
+.stat {
+  font-size: 128px;
+  font-weight: 600;
+  letter-spacing: -4px;
+  line-height: 0.9;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  font-size: var(--t-head);
+  font-weight: 600;
+  letter-spacing: -1px;
+  line-height: 1.08;
+  color: var(--text);
+}
+
+/* Vertically centre a slide's content while keeping it left-aligned.
+   `layout: center` also centres horizontally, which we don't want here. */
+.slidev-layout.vcenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Packed slides step the whole scale down rather than shrinking one part.
+   Every value here exists because a slide overflowed the 552px canvas. */
+.slidev-layout.dense {
+  font-size: 16.5px;
+  padding: 38px var(--pad) 56px;
+}
+
+.slidev-layout.dense h2 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.slidev-layout.dense h3 {
+  font-size: 19px;
+}
+
+.slidev-layout.dense p {
+  margin-bottom: 11px;
+}
+
+.slidev-layout.dense .eyebrow {
+  margin-bottom: 11px;
+}
+
+.slidev-layout.dense .colhead {
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.slidev-layout.dense li {
+  margin-bottom: 8px;
+}
+
+.slidev-layout.dense .card {
+  padding: 14px 16px;
+}
+
+.slidev-layout.dense .card p {
+  font-size: 14px;
+}
+
+.slidev-layout.dense .card-sm {
+  padding: 9px 11px;
+}
+
+.slidev-layout.dense .card-sm h4 {
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.slidev-layout.dense .card-sm p {
+  font-size: 11.8px;
+  line-height: 1.32;
+}
+
+.slidev-layout.dense .term {
+  font-size: 13.5px;
+  line-height: 1.62;
+  padding: 13px 15px;
+}
+
+.slidev-layout.dense pre {
+  font-size: 13.5px;
+  padding: 13px 16px !important;
+}
+
+.slidev-layout.dense table {
+  font-size: 0.76em;
+}
+
+.slidev-layout.dense th,
+.slidev-layout.dense td {
+  padding: 7px 10px 7px 0;
+}
+
+.slidev-layout.dense .warn {
+  padding: 12px 16px;
+}
+
+.slidev-layout.dense .warn p {
+  font-size: 15px;
+}
+
+/* ---------- Flow diagrams ---------- */
+
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.flow-node {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 14px 20px;
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* The element the current slide is making a point about */
+.flow-node.is-active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* Something the human is doing, rather than the machine */
+.flow-node.is-human {
+  border-style: dashed;
+  color: var(--text-soft);
+  background: transparent;
+}
+
+.flow-arrow {
+  color: var(--text-faint);
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* Return path under a flow, drawn as three borders */
+.loop-back {
+  margin-top: -1px;
+  margin-bottom: 22px;
+  height: 34px;
+  border: 1px solid var(--accent);
+  border-top: 0;
+  border-radius: 0 0 var(--radius) var(--radius);
+  position: relative;
+}
+
+.loop-back::after {
+  content: 'repeat until done';
+  position: absolute;
+  left: 50%;
+  bottom: -11px;
+  transform: translateX(-50%);
+  background: var(--bg);
+  padding: 0 12px;
+  font-family: var(--font-mono);
+  font-size: var(--t-caption);
+  color: var(--accent);
+}
+
+/* Numbered horizontal loop, six abreast */
+.loop-steps {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+.loop-step {
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  background: var(--surface);
+  padding: 12px 13px 14px;
+}
+
+.loop-step .n {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.loop-step h4 {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.loop-step p {
+  font-size: 12.5px;
+  line-height: 1.35;
+  margin: 0;
+  max-width: none;
+}
+
+/* Row of headline numbers */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.metric-value {
+  font-family: var(--font-sans);
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: -2px;
+  line-height: 1;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-label {
+  font-size: var(--t-caption);
+  color: var(--text-soft);
+  margin-top: 10px;
+  line-height: 1.35;
+}
+
+/* Callout for a gotcha the audience will otherwise hit */
+.warn {
+  border-left: 3px solid var(--run);
+  background: var(--surface);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 16px 20px;
+}
+
+.warn .warn-label {
+  font-family: var(--font-mono);
+  font-size: var(--t-caption);
+  color: var(--run);
+  margin-bottom: 8px;
+}
+
+.warn p {
+  max-width: none;
+}
+
+/* Card */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+
+.card h3 {
+  margin-bottom: 7px;
+}
+
+.card p {
+  font-size: 15.5px;
+  line-height: 1.45;
+  margin: 0;
+  max-width: none;
+}
+
+/* Accented card, for the one item on the slide that carries the argument */
+.card.is-key {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.card.is-key h3 {
+  color: var(--accent);
+}
+
+/* Compact card, for grids of nine or more */
+.card-sm {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+
+.card-sm h4 {
+  margin-bottom: 4px;
+}
+
+.card-sm p {
+  font-size: 12.5px;
+  line-height: 1.35;
+  margin: 0;
+  color: var(--text-soft);
+  max-width: none;
+}
+
+/* Ruled row. Same information as a .card-sm at roughly half the height,
+   for columns that have to carry four or more items. */
+.row-item {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.row-item:first-child {
+  padding-top: 0;
+}
+
+.row-item h4 {
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.row-item p {
+  font-size: 12.5px;
+  line-height: 1.35;
+  margin: 0;
+  color: var(--text-soft);
+  max-width: none;
+}
+
+/* Column heading above a list, mono and ruled */
+.colhead {
+  font-family: var(--font-mono);
+  font-size: var(--t-eyebrow);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+
+/* Ruled agenda row */
+.agenda-item {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 16px;
+  color: var(--text);
+}
+
+.agenda-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  min-width: 20px;
+}
+
+/* Inline pill */
+.badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--t-caption);
+  padding: 5px 11px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-soft);
+  margin: 0 7px 7px 0;
+}
+
+.badge-accent {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* Terminal block. One child div per line so a blank source line
+   never lets the markdown parser inject a <p> and break nesting. */
+.term {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  font-family: var(--font-mono);
+  font-size: var(--t-code);
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.term > div {
+  white-space: pre;
+}
+
+.term .ok { color: var(--ok); }
+.term .run { color: var(--run); }
+.term .fail { color: var(--fail); }
+.term .dim { color: var(--text-faint); }
+.term .cmd { color: var(--accent); }
+
+/* Protocol diagram: client, wire, agent */
+.acp {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0;
+}
+
+.acp-box {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 18px 20px;
+}
+
+.acp-box.is-agent {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.acp-box .tag {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.acp-box.is-agent .tag {
+  color: var(--accent);
+}
+
+.acp-link {
+  text-align: center;
+  padding: 0 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.acp-link .wire {
+  color: var(--accent);
+  font-size: 15px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* Footer row of destinations */
+.linkrow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.linkrow .k {
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-bottom: 4px;
+}
+
+.linkrow .v {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
+/* Before/after columns */
+.compare-label {
+  font-size: var(--t-caption);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding-bottom: 10px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.compare-label.is-after {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ---------- Motion ---------- */
+
+.slidev-vclick-target {
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slidev-layout *,
+  .slidev-vclick-target {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

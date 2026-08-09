@@ -1,0 +1,8 @@
+[project]
+name = "sample-service"
+version = "1.0.0"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.release-readiness]
+owner = "sample-team"

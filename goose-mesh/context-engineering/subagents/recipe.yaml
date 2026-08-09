@@ -1,0 +1,28 @@
+version: "1.0.0"
+title: "Subagent Review Demo"
+description: "Review a small brief with isolated subagents"
+instructions: |
+  Keep the main conversation focused on the final answer.
+  Delegate the work exactly as described in the prompt.
+prompt: |
+  Review sample/brief.md using subagents:
+
+  1. In parallel, run two focused, read-only subagents:
+     - one extracts the requirements;
+     - one identifies risks and unanswered questions.
+     Ask each to return only a short bullet list.
+  2. After both finish, run one subagent sequentially. Pass it the two returned
+     bullet lists and ask it to produce a concise combined recommendation.
+  3. Return only that recommendation in this main conversation.
+
+  Do not edit any files.
+extensions:
+  - type: platform
+    name: summon
+  - type: builtin
+    name: developer
+    display_name: Developer
+    timeout: 300
+    bundled: true
+settings:
+  max_turns: 8

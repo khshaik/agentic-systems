@@ -1,0 +1,7 @@
+# Scope-specific context
+These instructions supplement parent hints whenever Goose accesses this directory.
+
+- <module purpose and boundaries>
+- <local coding or framework conventions>
+- <local tests or verification command>
+- <files or behavior that must not be changed>

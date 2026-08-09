@@ -1,0 +1,10 @@
+# Order-service domain conventions
+These instructions supplement the repository-level .goosehints whenever Goose reads or changes files in this package.
+
+- Keep domain logic independent of CLI, HTTP, databases, and filesystem code.
+- Use integer cents for all prices, discounts, and totals.
+- Reject negative quantities, negative prices, and unsupported discount percentages.
+- Keep calculations deterministic and free of network, clock, random, or environment dependencies.
+- Prefer frozen dataclasses for domain values.
+- Preserve the invariant: `total_cents = subtotal_cents - discount_cents`, and the total must never be negative.
+- Run `make test` after modifying this package.

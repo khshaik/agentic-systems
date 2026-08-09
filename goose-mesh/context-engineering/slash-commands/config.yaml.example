@@ -1,0 +1,5 @@
+slash_commands:
+  - command: "review"
+    recipe_path: "REPLACE_WITH_ABSOLUTE_PATH/recipes/review.json"
+  - command: "explain"
+    recipe_path: "REPLACE_WITH_ABSOLUTE_PATH/recipes/explain.json"

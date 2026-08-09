@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "developer__shell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${PLUGIN_ROOT}/scripts/hook_handler.py\" guard-shell",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "AfterShellExecution": [
+      {
+        "matcher": "^(make verify|make test|python3? -m (unittest|pytest))",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${PLUGIN_ROOT}/scripts/hook_handler.py\" record-event",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

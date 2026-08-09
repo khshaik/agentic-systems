@@ -1,0 +1,24 @@
+version: "1.0.0"
+title: Brief to Action Plan
+description: Use an isolated subrecipe to summarize a brief, then create an action checklist.
+instructions: |
+  Call only summarize_brief with the complete imported brief as its
+  brief_content parameter. Wait for its result, then turn that returned summary
+  into a concise ordered Markdown checklist yourself. Never invent or replace
+  brief content, call other recipes, use tools, or implement anything.
+parameters:
+  - key: brief_content
+    input_type: string
+    requirement: required
+    description: Project brief text
+sub_recipes:
+  - name: summarize_brief
+    path: ./subrecipes/summarize.yaml
+prompt: |
+  Imported brief:
+
+  {{ brief_content }}
+
+  Pass the complete imported brief above as the brief_content parameter to
+  summarize_brief. After it returns, convert its output into an ordered
+  Markdown implementation checklist. Return only that checklist.

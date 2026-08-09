@@ -1,0 +1,4 @@
+# Add these keys to ~/.config/goose/config.yaml.
+# Replace both values with a provider and model you have configured.
+GOOSE_PLANNER_PROVIDER: "openai"
+GOOSE_PLANNER_MODEL: "your-planner-model"

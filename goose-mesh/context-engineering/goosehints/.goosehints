@@ -1,0 +1,33 @@
+# Purpose and project context
+This repository is a dependency-free Python 3.11+ sample order-pricing service. It exists to demonstrate how Goose automatically receives project context, engineering conventions, and collaboration preferences from .goosehints files.
+
+@docs/domain-rules.md
+
+Read README.md when setup or usage details are needed. Read docs/architecture.md when a task changes module boundaries or data flow. Read docs/engineering-standards.md when a task needs more detailed coding guidance.
+
+# Canonical commands
+- Run all verification: `make verify`
+- Run unit tests: `make test`
+- Run the sample application: `make run`
+- Validate all .goosehints files and referenced files: `make validate-hints`
+- Preview the hints applicable to a path: `python3 scripts/show_effective_hints.py <path>`
+
+# Project-wide engineering conventions
+- Use only the Python standard library unless the user explicitly approves a dependency.
+- Target Python 3.11 or newer and include type hints on public functions.
+- Represent money as integer cents; never use binary floating-point for money.
+- Prefer small pure functions, explicit validation, and immutable domain values.
+- Preserve public behavior unless the requested task explicitly changes it.
+- Add or update tests for every behavior change.
+- Keep changes narrow; do not perform unrelated refactoring.
+
+# Collaboration preferences
+- Before editing, briefly state the files likely to change and the verification command you will run.
+- Inspect the relevant implementation and tests before proposing a change.
+- Do not create dependencies, network calls, background services, or generated files without asking.
+- Never place credentials, tokens, personal data, or production values in source files or hints.
+- When requirements are ambiguous, choose the smallest reversible implementation and state the assumption.
+- After editing, report changed files, behavioral impact, tests run, and any remaining risk.
+
+# Definition of done
+A task is complete only when the requested behavior is implemented, relevant tests pass, `make validate-hints` passes, and the final response includes evidence from the commands actually run.

@@ -1,0 +1,27 @@
+# Project context
+This repository is <one-sentence purpose>. The primary language/runtime is <runtime>.
+
+@docs/<small-essential-context-file>.md
+
+Read docs/architecture.md when changing module boundaries. Read docs/contributing.md when preparing a pull request.
+
+# Canonical commands
+- Build: `<command>`
+- Test: `<command>`
+- Lint: `<command>`
+- Full verification: `<command>`
+
+# Conventions
+- <specific language and architecture conventions>
+- <data representation and error-handling rules>
+- <testing expectations>
+
+# Preferences
+- Inspect implementation and tests before editing.
+- Make the smallest change that satisfies the request.
+- Ask before adding dependencies or changing public contracts.
+- Report changed files and commands actually run.
+
+# Safety and completion
+- Never write secrets or production data to the repository.
+- A task is complete only after <verification requirements> pass.

@@ -1,0 +1,5 @@
+# Project rules: paths are relative to this directory.
+.env
+secrets/
+*.pem
+

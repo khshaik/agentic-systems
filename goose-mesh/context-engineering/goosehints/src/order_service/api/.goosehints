@@ -1,0 +1,8 @@
+# API adapter conventions
+These instructions add to the root and order-service package hints when Goose accesses this directory.
+
+- Treat this package as an adapter around the domain service; do not duplicate pricing rules here.
+- Input and output are JSON-compatible Python dictionaries.
+- Validate required fields and return stable error dictionaries instead of exposing tracebacks.
+- Keep response keys backward compatible unless the user explicitly requests a contract change.
+- Add contract-focused tests before changing response shapes or error handling.

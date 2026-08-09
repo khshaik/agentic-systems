@@ -1,0 +1,8 @@
+node_modules
+dist
+.slidev
+*.local
+
+__pycache__/
+*.py[cod]
+.DS_Store

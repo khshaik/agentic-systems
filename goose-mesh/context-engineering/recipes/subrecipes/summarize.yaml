@@ -1,0 +1,15 @@
+version: "1.0.0"
+title: Summarize Brief
+description: Summarize imported project brief content.
+instructions: Return five or fewer concise Markdown bullets. Do not call tools, modify files, or claim work was implemented.
+parameters:
+  - key: brief_content
+    input_type: string
+    requirement: required
+    description: Imported project brief content
+settings:
+  max_turns: 5
+prompt: |
+  Summarize the goal, requirements, and constraints in this brief:
+
+  {{ brief_content }}

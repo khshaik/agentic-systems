@@ -1,0 +1,8 @@
+[project]
+name = "goose-goosehints-complete-sample"
+version = "1.0.0"
+description = "Dependency-free working sample for Goose .goosehints project context"
+requires-python = ">=3.11"
+
+[tool.setuptools]
+package-dir = {"" = "src"}

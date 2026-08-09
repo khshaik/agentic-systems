@@ -1,0 +1,7 @@
+# Documentation conventions
+These instructions supplement the root hints whenever Goose reads or changes documentation.
+
+- Keep commands copy-pasteable and execute them from the repository root unless stated otherwise.
+- Clearly distinguish official Goose behavior from helper scripts supplied by this sample.
+- Update README.md when setup, commands, repository layout, or user-visible behavior changes.
+- Never claim a Goose session was tested unless it was actually run with a configured provider.

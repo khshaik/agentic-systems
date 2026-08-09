@@ -1,0 +1,47 @@
+{
+  "required_files": [
+    {
+      "path": "README.md",
+      "severity": "high",
+      "message": "Primary repository documentation is missing."
+    },
+    {
+      "path": "LICENSE",
+      "severity": "medium",
+      "message": "No LICENSE file was found."
+    },
+    {
+      "path": ".gitignore",
+      "severity": "low",
+      "message": "No .gitignore file was found."
+    },
+    {
+      "path": "CHANGELOG.md",
+      "severity": "medium",
+      "message": "No CHANGELOG.md file was found."
+    }
+  ],
+  "ci_candidates": [
+    ".github/workflows",
+    ".gitlab-ci.yml",
+    "Jenkinsfile",
+    "azure-pipelines.yml",
+    ".circleci/config.yml"
+  ],
+  "test_directories": ["tests", "test", "spec"],
+  "exclude_paths": [
+    ".git",
+    ".release-readiness",
+    ".venv",
+    "venv",
+    "node_modules",
+    "dist",
+    "build",
+    "target",
+    "vendor",
+    "__pycache__"
+  ],
+  "max_file_bytes": 1048576,
+  "quick_scan_file_limit": 500,
+  "full_scan_file_limit": 5000
+}

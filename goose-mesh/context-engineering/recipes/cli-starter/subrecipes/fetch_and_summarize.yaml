@@ -1,0 +1,18 @@
+version: "1.0.0"
+title: Fetch and Summarize
+description: Fetch a URL (via an HTTP tool) and return a short summary.
+instructions: |
+  Use an HTTP fetch tool available to Goose (MCP-backed) to retrieve the URL content passed as the `url` parameter. Extract the primary content (ignore navigation and chrome), then return five or fewer concise Markdown bullets summarizing the key points. If the tool cannot be called in this environment, return a short note explaining what would have been fetched.
+parameters:
+  - key: url
+    input_type: string
+    requirement: required
+    description: URL to fetch
+settings:
+  max_turns: 5
+prompt: |
+  Retrieve the primary content at:
+
+  {{ url }}
+
+  Summarize the core ideas and findings in five or fewer Markdown bullets. If a network fetch is not available, describe what steps the fetch tool would take and provide a plausible short summary instead.

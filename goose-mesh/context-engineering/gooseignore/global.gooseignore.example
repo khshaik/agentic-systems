@@ -1,0 +1,5 @@
+# Global rules: copy this file to ~/.config/goose/.gooseignore
+**/.env*
+**/*.pem
+**/credentials/**
+

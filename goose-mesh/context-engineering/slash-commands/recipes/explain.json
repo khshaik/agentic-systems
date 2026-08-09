@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "title": "Explain a topic",
+  "description": "Explain one topic using the current repository as context.",
+  "parameters": [
+    {
+      "key": "topic",
+      "input_type": "string",
+      "requirement": "required",
+      "description": "Topic to explain"
+    }
+  ],
+  "instructions": "Explain {{ topic }} from this repository in plain language. Be concise and cite relevant files.",
+  "prompt": "Explain {{ topic }}."
+}

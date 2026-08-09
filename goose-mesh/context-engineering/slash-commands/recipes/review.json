@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "title": "Quick code review",
+  "description": "Review the current changes and report only actionable findings.",
+  "instructions": "Inspect the current repository changes. Prioritize correctness, security, and missing tests. Do not edit files.",
+  "prompt": "Review the current changes and return concise findings with file references."
+}

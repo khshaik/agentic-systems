@@ -1,0 +1,9 @@
+# Test conventions
+These instructions supplement the root hints whenever Goose reads or changes tests.
+
+- Use Python's built-in `unittest`; do not introduce a third-party test framework.
+- Name test methods `test_<behavior>_<expected_result>`.
+- Keep tests deterministic, isolated, and free of network access, sleeps, and shared mutable state.
+- Cover the normal case, boundary cases, and invalid input for changed behavior.
+- Assert public behavior rather than private implementation details.
+- Run `make test` after every test or implementation change.

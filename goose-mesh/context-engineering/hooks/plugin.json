@@ -1,0 +1,5 @@
+{
+  "name": "event-logger",
+  "version": "1.0.0",
+  "description": "Log selected Goose lifecycle events"
+}

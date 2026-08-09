@@ -1,0 +1,8 @@
+# Repository-tooling conventions
+These instructions supplement the root hints whenever Goose reads or changes scripts.
+
+- Scripts must use only the Python standard library and run on Python 3.11+.
+- Default to read-only behavior; require an explicit option before modifying files.
+- Return a non-zero exit code for validation failures.
+- Emit concise, actionable error messages suitable for local use and CI logs.
+- Keep these utilities independent of Goose internals; they validate and explain the repository sample only.

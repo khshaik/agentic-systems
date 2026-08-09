@@ -1,0 +1,19 @@
+version: "1.0.0"
+title: CLI Starter — Fetch and Summarize
+description: A minimal recipe that demonstrates spawning an isolated subrecipe to fetch a URL and return a concise summary.
+instructions: |
+  Call the `fetch_and_summarize` subrecipe with the provided `url` parameter. Wait for its result and return the summary it produces. Do not modify files or call other recipes.
+parameters:
+  - key: url
+    input_type: string
+    requirement: required
+    description: URL to fetch and summarize
+sub_recipes:
+  - name: fetch_and_summarize
+    path: ./subrecipes/fetch_and_summarize.yaml
+prompt: |
+  Fetch and summarize the content at the provided URL:
+
+  {{ url }}
+
+  Return a concise summary in Markdown (five bullets or fewer).

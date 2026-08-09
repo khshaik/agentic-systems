@@ -1,0 +1,3 @@
+.goose-hook-events.jsonl
+__pycache__/
+*.py[cod]
