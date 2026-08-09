@@ -1,8 +1,10 @@
 # CrewAI Agentic Content Workflow
 
-<p align="center">
-  <img src="AILaunchPad/33.png" alt="CrewAI collaborative agent framework" width="900" />
-</p>
+Best of Both Worlds: CrewAI
+
+CrewAI: Collaborative Agent Framework
+
+CrewAI is a powerful framework for creating collaborative agent systems where multiple AI agents work together to accomplish complex tasks.
 
 <p align="center">
   <img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" />
@@ -120,9 +122,20 @@ The process is **sequential**. Research must exist before writing; the social ta
 
 This follows the AILaunchPad distinction between a shared world state and agent-local working context:
 
-<p align="center">
-  <img src="AILaunchPad/1.png" alt="Shared context and per-agent scratchpads" width="860" />
-</p>
+### World State: Shared vs Local Memoy
+
+```text
++------------------------------------+---------------------------------------------+
+| Shared Context Store               | Per-Agent Scratchpads                       |
+| Use global state (central blackboard) | Each agent keeps private short-term memory |
+| accessible by all agents           | (only relevant to itself)                   |
++------------------------------------+---------------------------------------------+
+| Synchronization                    | TTL & Cleanup                               |
+| Shared state ensures no agent misses | Apply time-to-live or Cleaner agent to     |
+| updates; local memory for internal  | prune stale info for token efficiency      |
+| calculation                        |                                             |
++------------------------------------+---------------------------------------------+
+```
 
 ## Technical architecture
 
@@ -208,9 +221,16 @@ Do not put production keys directly in notebook cells, outputs, screenshots, or 
 
 The notebook applies **capability scoping**: an agent should receive only the tools necessary for its role. The supplied slides describe this as least privilege.
 
-<p align="center">
-  <img src="AILaunchPad/14.png" alt="Capability scoping and least privilege" width="900" />
-</p>
+```text
++------------------+----------------------------------------------+
+| Agent Role       | Permissions                                  |
++------------------+----------------------------------------------+
+| Data Agent       | Read-only database access, no internet       |
+| Coder Agent      | Code execution in sandbox only               |
+| Writer Agent     | Internet read-only, no database access       |
+| Orchestrator     | Full coordination, limited tool execution    |
++------------------+----------------------------------------------+
+```
 
 | Control | Current implementation | Recommended production evolution |
 |---|---|---|
@@ -235,10 +255,35 @@ The notebook applies **capability scoping**: an agent should receive only the to
 | Social output | platform fit, factual consistency, CTA quality | channel-specific rubric |
 | Safety | blocked publishes, secret exposure, policy violations | adversarial tool and prompt tests |
 
-<p align="center">
-  <img src="AILaunchPad/20.png" alt="Tracing multi-agent interactions" width="45%" />
-  <img src="AILaunchPad/21.png" alt="Multi-agent key metrics" width="45%" />
-</p>
+```text
+Tracing Multi-Agent Interactions
++----------------------------------------------------------------------------+
+| 1 | Unified Trace IDs                                                     |
+|   | Tag messages and actions with task/session ID to correlate across     |
+|   | agents                                                               |
++----------------------------------------------------------------------------+
+| 2 | Span Logging                                                          |
+|   | Treat each agent's step as a span in distributed trace                |
+|   | (parent-child relations)                                              |
++----------------------------------------------------------------------------+
+| 3 | Causality Tree                                                        |
+|   | Build tree of agent calls/tools to see how one agent's output leads  |
+|   | to another's action                                                   |
++----------------------------------------------------------------------------+
+```
+
+```text
+Key Metrics & KPIs
++----------------------------------------------------------------------------+
+| Avg Steps Per Task | Track efficiency of agent coordination                   |
++----------------------------------------------------------------------------+
+| Success Rate       | Tasks completed without human help                        |
++----------------------------------------------------------------------------+
+| Latency            | Monitor end-to-end completion time                         |
++----------------------------------------------------------------------------+
+| Stuck Loop Rate    | Measure intervention frequency                             |
++----------------------------------------------------------------------------+
+```
 
 ## Productization roadmap
 
