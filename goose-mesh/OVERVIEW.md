@@ -1,6 +1,6 @@
 # Building with open-source AI agents
 
-Workshop materials for a hands-on session on [goose](https://github.com/aaif-goose/goose),
+Materials for a hands-on practice on [goose](https://github.com/aaif-goose/goose),
 the open-source AI agent governed by the Agentic AI Foundation under the Linux Foundation.
 Covers the ground from "what is an agent?" to the goose Development Kit: sessions, context
 engineering, recipes, tool permissions, MCP and ACP.
