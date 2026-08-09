@@ -1,0 +1,16 @@
+[project]
+name = "multi-agent-workflow"
+version = "0.1.0"
+description = "Exam Helper — Multi-Agent Workflow (Orchestrator + Explainer + Learner)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain>=0.3.0",
+    "langchain-google-genai>=2.0.0",
+    "langgraph>=0.2.0",
+    "python-dotenv>=1.0.1",
+    "pydantic>=2.0.0",
+    "structlog>=24.0.0",
+    "firecrawl-py>=1.0.0",
+    "mcp>=1.26.0",
+]
