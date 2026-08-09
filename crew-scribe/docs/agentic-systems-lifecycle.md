@@ -2,9 +2,18 @@
 
 [← Project README](../README.md) · [Architecture and frameworks →](agent-architectures-and-frameworks.md)
 
-<p align="center">
-  <img src="../AILaunchPad/5.png" alt="AILaunchPad nine-stage session agenda" width="1000" />
-</p>
+```text
+Topics
+1. When to use Multi Agents?
+2. Agent to Agent (A2A) Communication
+3. Planning & Coordination
+4. Environment & Memory Architecture
+5. Safety, Permissions & Governance
+6. Observability & Evaluation
+7. Scaling & Reliability
+8. Frameworks & Build Options
+9. Anti-Patterns & Design Checklists
+```
 
 This page translates the AILaunchPad session agenda into an end-to-end engineering guide. The nine topics are intentionally sequential: decide whether agents are justified before designing their communication; design coordination before state; secure state and tools before scaling; make the system observable before claiming reliability.
 
