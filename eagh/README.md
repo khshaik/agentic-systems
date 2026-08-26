@@ -13,7 +13,15 @@ Evidence checkpoints · Crash recovery · Evidence-governed continuation · Veri
 ![pytest](https://img.shields.io/badge/pytest-35_tests-0A9EDC?style=flat&logo=pytest&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat)
 
-[Problem](#problem-statement) · [Solution](#solution-approach) · [10-Step Example](#the-10-step-example) · [Architecture](#architecture) · [Quick Start](#quick-start) · [Commands](#commands-reference) · [Structure](#project-structure) · [Modules](#source-modules)
+[Demo](#demo) · [Problem](#problem-statement) · [Solution](#solution-approach) · [10-Step Example](#the-10-step-example) · [Architecture](#architecture) · [Quick Start](#quick-start) · [Commands](#commands-reference) · [Structure](#project-structure) · [Modules](#source-modules)
+
+---
+
+## Demo
+
+[![EGAH PoC Demo](https://img.youtube.com/vi/voH1QFXdlkE/maxresdefault.jpg)](https://youtu.be/voH1QFXdlkE)
+
+▶️ **[Watch the demo on YouTube](https://youtu.be/voH1QFXdlkE)** — Evidence-governed crash recovery in under 3 minutes.
 
 ---
 
