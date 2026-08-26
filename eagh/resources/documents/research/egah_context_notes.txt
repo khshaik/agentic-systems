@@ -1,0 +1,1704 @@
+es — the attached EGAH document is thematically very well aligned with this CFP, substantially more than the original OVAR paper. However, I would not submit the 8,500-word document itself. I would use it as the research foundation and submit a practitioner-oriented abstract/talk derived from it.
+
+My fit assessment
+CFP requirement	EGAH document	Fit
+Agent systems in production	Agent harness/runtime architecture	🟢 Strong
+Agent harnesses	Evidence-enhanced LangGraph/harness	🟢 Excellent
+Evals	Technical + organizational evaluation	🟢 Strong
+Long-running agents	Crash at step 40/60	🟢 Excellent
+State/recovery	Execution + evidence state	🟢 Excellent
+Small models	8B vs frontier capability boundaries	🟢 Strong
+Inference cost	Resource/outcome accounting	🟢 Strong
+Hands-on experience	Currently mostly proposed architecture	🟡 Needs care
+Honest "what worked/didn't"	Evaluation is currently future work	🔴 Needs modification
+30-min practitioner talk	8,500-word research paper	🔴 Must convert
+Broad practitioner relevance	Very high	🟢 Excellent
+
+The paper directly targets all four questions posed by the CFP: abstraction vs ceremony, whether an 8B model is sufficient, crash recovery at step 40/60, and making small-model deployment economically viable. Your Section 7 explicitly maps EGAH to each of those questions.
+
+The biggest issue
+
+There is one important mismatch between the CFP and your current document.
+
+The CFP says:
+
+"Talks grounded in hands-on experience"
+
+and
+
+"Honest takes: what worked, what didn't, and what you'd do differently."
+
+But your paper currently describes planned implementation and planned evaluation, rather than completed production experience.
+
+For example, the document says:
+
+"EGAH will be evaluated..."
+
+and your implementation roadmap describes future phases including 8B deployment, crash testing and production deployment.
+
+So don't present EGAH as an already validated production framework.
+
+That would actually weaken your submission.
+
+What I recommend instead
+
+Turn the paper into a research-informed engineering talk:
+
+Evidence-Governed Agent Harnesses: What Should Survive When an Agent Crashes at Step 40 of 60?
+
+This is, in my opinion, a much stronger CFP title than the current academic title.
+
+The hook is immediately connected to their own wording.
+
+Central thesis
+
+A production agent harness should persist more than execution state. It should persist the evidence that explains what happened, what was verified, what remains valid, and what the agent is still authorized to do.
+
+That is your strongest idea.
+
+Your current paper already establishes this distinction:
+
+Traditional recovery
+
+Execution State
+      ↓
+Checkpoint
+      ↓
+Crash
+      ↓
+Restore
+      ↓
+Continue
+
+versus:
+
+Evidence-governed recovery
+
+Execution State
+       +
+Evidence State
+       +
+Verification History
+       +
+Resource / Outcome Attribution
+       ↓
+    Checkpoint
+       ↓
+      Crash
+       ↓
+    Restore
+       ↓
+Resume with
+execution + evidence continuity
+
+Your document explicitly proposes preserving both execution and evidence state during a step-40/60 crash.
+
+That is very relevant to this CFP.
+
+But I would narrow the talk
+
+Your current paper tries to cover:
+
+Agent harnesses
+Evidence governance
+Crash recovery
+Small models
+ROI
+Resource accounting
+Organizational governance
+Compliance
+Capability boundaries
+
+That's too much for 30 minutes.
+
+It risks sounding like:
+
+"Here is my grand unified framework for everything around agents."
+
+And this CFP explicitly seems interested in finding out what actually holds, not another framework pitch.
+
+Make one idea the protagonist:
+Evidence as first-class state in agent harnesses
+
+Everything else becomes supporting evidence.
+
+                 EVIDENCE
+                    │
+        ┌───────────┼───────────┐
+        ↓           ↓           ↓
+   Long-running   Tool        Model
+     agents      actions     selection
+        │           │           │
+        ↓           ↓           ↓
+     Recovery    Verification  Boundaries
+        │           │           │
+        └───────────┼───────────┘
+                    ↓
+             Production Agent
+
+This would make the talk considerably sharper.
+
+Your strongest three sections
+1. Crash recovery
+
+"State survived. But did the evidence survive?"
+
+This is probably your strongest CFP hook.
+
+Your paper explicitly identifies the difference between traditional state management and evidence state management.
+
+2. Evidence checkpoints
+
+Instead of:
+
+Plan → Tool → Result → Next
+
+you propose:
+
+Plan
+ ↓
+Evidence Checkpoint
+ ↓
+Tool
+ ↓
+Result Verification
+ ↓
+Evidence Update
+ ↓
+Next
+
+The document explicitly defines this enhanced execution graph.
+
+That's excellent material for a practitioner talk.
+
+3. Small-model boundaries
+
+Instead of asking:
+
+"Is 8B as good as 70B?"
+
+ask:
+
+"For which tasks is 8B demonstrably good enough?"
+
+Then introduce evidence-based capability boundaries.
+
+Your paper proposes:
+
+Task
+ ↓
+Evidence History
+ ↓
+Complexity
+ ↓
+┌─────────────┬──────────────┬──────────────┐
+│ Within      │ Boundary     │ Beyond       │
+│ Boundary    │ Near         │ Boundary     │
+├─────────────┼──────────────┼──────────────┤
+│ Small model │ Human check  │ Large model  │
+└─────────────┴──────────────┴──────────────┘
+
+This directly answers the CFP's 8B question.
+
+What I would NOT emphasize
+
+I would significantly reduce:
+
+❌ Organizational governance
+
+It's interesting, but it pulls the talk toward enterprise governance.
+
+❌ TOE / UTAUT
+
+Not relevant enough to this audience.
+
+❌ Full ROI framework
+
+Keep it as a supporting component.
+
+❌ "First framework" claims
+
+Be very careful.
+
+Your paper repeatedly says things such as:
+
+"first framework"
+
+and
+
+"first agent graph design"
+
+and
+
+"first work to bridge..."
+
+Those are high-risk claims unless you've conducted a genuinely comprehensive literature review.
+
+For a meetup proposal, you don't need them.
+
+Say:
+
+"I explore an approach..."
+
+rather than:
+
+"We provide the first..."
+
+That sounds more credible and invites discussion rather than challenging reviewers to disprove your novelty claim.
+
+Another important correction
+
+Your current abstract says:
+
+"We demonstrate how evidence-aware harness design enables agents to survive crashes at step 40 of 60..."
+
+But your implementation section indicates that the crash-recovery experiment is planned, not completed.
+
+That wording should therefore change.
+
+Instead:
+
+"We explore how evidence-aware harness design can preserve both execution and evidence state across long-running workflows, including crash-and-resume scenarios such as a failure at step 40 of 60."
+
+That is much safer and academically honest.
+
+Similarly, don't say:
+
+"supports small model deployment"
+
+unless you've actually tested it.
+
+Say:
+
+"explores an evidence-based approach to determining when smaller models are sufficient for specific task classes."
+
+Recommended CFP abstract
+
+I would submit something close to this:
+
+Evidence-Governed Agent Harnesses: What Should Survive When an Agent Crashes at Step 40 of 60?
+
+Long-running agents don't just need to remember where they were. They need to know what they had already verified, which evidence is still valid, what was accomplished, and what can safely happen next.
+
+This talk explores Evidence-Governed Agent Harnesses (EGAH), an approach that treats evidence as first-class runtime state rather than an audit layer added after execution. The idea is simple: alongside graph state and checkpoints, an agent harness maintains evidence envelopes, verification history, resource consumption and outcome attribution.
+
+We'll walk through an evidence-enhanced execution graph that changes the usual Plan → Tool → Result → Next loop into Plan → Evidence Checkpoint → Tool → Verification → Evidence Update → Next. We'll then look at what happens when a long-running workflow crashes at step 40 of 60: what traditional checkpointing restores, what it doesn't, and what an evidence-aware harness would need to preserve.
+
+The same idea leads to a practical question around small models: rather than asking whether an 8B model is universally "good enough", can a harness establish evidence-backed capability boundaries for specific task classes and escalate to a larger model or human when the evidence isn't sufficient?
+
+The talk will also cover the engineering trade-offs: checkpoint overhead, evidence persistence, verification frequency, resource/outcome accounting and where additional governance becomes useful infrastructure versus ceremony.
+
+This is an engineering exploration rather than a claim of a production-ready framework. I'll share the architecture, implementation direction, evaluation plan, limitations and the questions that remain open.
+
+Audience takeaways:
+
+How to treat evidence as first-class state in an agent harness
+How to design checkpoints that preserve both execution and verification state
+How to reason about stale or insufficient evidence in long-running agents
+How evidence can help define practical boundaries for small-model deployment
+What to measure before adding another layer to an agent harness
+Overall verdict
+Is the attached document apt?
+
+Yes — conceptually: 9/10.
+
+As the actual CFP submission: 6/10.
+
+As the source material from which to build the CFP talk: 10/10.
+
+The document is unusually well aligned with the CFP's themes because it explicitly addresses agent harnesses, crash recovery, 8B models, resource optimization and evaluation.
+
+The key is to stop treating the 8,500-word document as the submission.
+
+Treat it as your research/technical foundation, and submit a concise, experience-oriented abstract centered on:
+
+"Evidence should survive with state."
+
+That gives you a distinctive story connecting your existing work on RAG/context, agent loops, graphs, harness engineering, evaluation, observability, tokenomics/resource accounting and AI governance without trying to put all of those topics into one talk.
+
+If I were selecting talks for this CFP, I would find this angle considerably more compelling than an OVAR/ROI-centric talk.
+---
+
+Evidence-Governed Agent Harnesses: Making Evidence Survive Long-Running Agent Execution
+Abstract
+
+Long-running AI agents introduce a production problem that is easy to overlook: preserving execution state is not necessarily the same as preserving the evidence that justified the execution.
+
+An agent may plan a multi-step workflow, invoke tools, retrieve information, make intermediate decisions, and eventually reach a consequential action many steps later. If the workflow crashes at step 40 of 60, conventional checkpointing can restore execution state, but the harness may still lack a durable representation of what was verified, what was accomplished, which evidence remains valid, and what should be revalidated before execution continues.
+
+This talk presents Evidence-Governed Agent Harnesses (EGAH), an engineering approach that treats evidence as a first-class runtime object alongside graph state, checkpoints, memory and tool execution. The approach introduces evidence checkpoints, evidence envelopes, verification history, outcome attribution and capability boundaries directly into the agent execution graph rather than treating governance and auditability as external layers.
+
+The core execution pattern evolves from:
+
+Plan → Tool Call → Result → Next Step
+
+to:
+
+Plan → Evidence Checkpoint → Tool Call → Result Verification → Evidence Update → Next Step
+
+This provides a practical mechanism for determining whether an agent should continue execution, refresh evidence, request human intervention, or escalate to a more capable model.
+
+The approach also provides a way to think about the growing use of small models in production. Instead of asking whether a tuned 8B model is simply "good enough" in general, the harness can establish evidence-backed capability boundaries for specific task classes. Tasks within an established boundary can use a smaller, cheaper model; boundary-near tasks can trigger verification or human review; tasks beyond the boundary can escalate to a larger model.
+
+The talk will examine the architecture, execution model, evidence-state design, crash-recovery implications, small-model capability boundaries, resource/outcome accounting, and the trade-offs introduced by additional verification. It will also distinguish between what is currently demonstrated by the design and what remains to be validated through implementation and production experimentation.
+
+The central proposition is:
+
+A production agent harness should persist not only where the agent was, but also what the agent knew, what it verified, what it accomplished, and what it is still authorized to do.
+
+Problem
+
+Agent engineering has progressed rapidly from prompts to context, harnesses, loops and graphs. In production, however, another dimension becomes increasingly important: evidence state.
+
+A conventional long-running agent can be represented as:
+
+Plan → Tool → Result → State Update → Next Step
+
+The harness may persist:
+
+graph state,
+conversation/context state,
+tool results,
+checkpoints,
+memory,
+execution metadata.
+
+But consequential workflows introduce additional questions:
+
+Was the information used to make a decision still valid?
+Which prerequisites were actually verified?
+When were they verified?
+What changed after verification?
+Which actions were already completed?
+Which outcomes were independently confirmed?
+What authorization existed at the point of execution?
+If the workflow resumes after a crash, should the agent simply continue from the checkpoint?
+Should some evidence be revalidated before allowing the next action?
+
+These questions become particularly important as agents operate for longer periods, use more tools, interact with changing external systems and make decisions across multiple execution steps.
+
+The CFP's example of an agent crashing at step 40 of 60 therefore exposes a broader production concern:
+
+Checkpoint recovery can restore computational state without necessarily restoring the evidentiary context required to safely continue the workflow.
+
+EGAH explores treating that evidentiary context as part of the runtime state itself. The attached research document identifies this distinction explicitly as "State vs Evidence" and proposes preserving evidence state alongside execution state.
+
+Proposed Approach
+
+EGAH introduces an evidence layer directly into the agent harness.
+
+Instead of treating verification as a separate governance system operating outside the agent, the harness incorporates verification at execution boundaries.
+
+Conventional agent
+User Request
+     ↓
+Plan
+     ↓
+Tool Call
+     ↓
+Result
+     ↓
+Next Step
+     ↓
+Completion
+Evidence-governed agent
+User Request
+     ↓
+Plan
+     ↓
+Evidence Checkpoint
+     ↓
+Tool Call
+     ↓
+Result Verification
+     ↓
+Evidence Update
+     ↓
+Next Step
+     ↓
+Final Evidence Validation
+     ↓
+Completion + Audit Trail
+
+The supplied research document defines this as an Evidence-Enhanced Execution Graph, where evidence checkpoints become graph nodes rather than external validation stages.
+
+The intention is not to validate every operation indiscriminately. Rather, verification becomes an explicit part of the harness's execution semantics, particularly around actions where evidence, authorization, model capability or external state materially affect the decision.
+
+Evidence as First-Class Runtime State
+
+The proposed evidence state extends conventional agent state with structured information about what has been observed, verified and accomplished.
+
+An evidence envelope can capture information such as:
+
+evidence identity,
+timestamp,
+agent and task identity,
+execution phase,
+evidence type,
+verification status,
+resource consumption,
+outcome attribution,
+capability boundary,
+verification history.
+
+The supplied document defines an evidence-envelope schema containing these concepts and associates resource consumption and outcome attribution with the evidence record.
+
+This enables the harness to distinguish between:
+
+"I have a value in memory"
+
+and:
+
+"I have evidence that this value was observed,
+when it was observed,
+what it applies to,
+whether it was verified,
+and whether it remains valid for the action I am about to perform."
+
+That distinction becomes increasingly important in long-running agent workflows.
+
+What Happens at Step 40 of 60?
+
+Consider a long-running agent workflow:
+
+Step 01 ── Plan
+Step 02 ── Retrieve
+Step 03 ── Validate
+...
+Step 20 ── Tool execution
+...
+Step 39 ── Intermediate decision
+Step 40 ── CRASH
+...
+Step 60 ── Intended completion
+
+Traditional checkpointing can restore the workflow to a previously persisted execution state.
+
+EGAH adds another question:
+
+What evidence existed at Step 40?
+
+What was verified?
+
+What had already been accomplished?
+
+Which evidence was consumed by subsequent decisions?
+
+What became invalid while the workflow was interrupted?
+
+What must be revalidated before execution resumes?
+
+The proposed evidence-state layer therefore persists:
+
+Execution State
+       +
+Evidence Envelopes
+       +
+Verification History
+       +
+Outcome Attribution
+       +
+Capability Boundaries
+
+The supplied architecture explicitly contrasts traditional recovery, which restores execution state, with evidence-governed recovery, which restores both execution and evidence state to maintain audit continuity.
+
+This is the central production-engineering problem explored by the talk.
+
+Evidence Checkpoints
+
+An evidence checkpoint is introduced at an execution boundary where verification may be required.
+
+Conceptually:
+
+                 Evidence Checkpoint
+                         │
+              ┌──────────┴──────────┐
+              ↓                     ↓
+       Capture State         Create Evidence
+                                    │
+                                    ↓
+                           Verification Policy
+                                    │
+                          ┌─────────┴─────────┐
+                          ↓                   ↓
+                       Passed              Failed
+                          ↓                   ↓
+                   Permit Action       Escalate / Review
+
+The supplied design specifies:
+
+pre-execution state capture,
+evidence-envelope creation,
+verification-policy evaluation,
+permission to execute when verification succeeds,
+escalation when verification fails.
+
+The engineering question is therefore not simply "Should we add another validation layer?"
+
+It becomes:
+
+Where does verification belong in the execution graph, what should it verify, and when is the additional cost justified?
+
+That is directly relevant to determining which harness abstractions are useful infrastructure and which become ceremony.
+
+Small Models: From "Good Enough" to Evidence-Backed Boundaries
+
+The CFP also raises a practical question:
+
+Is a tuned 8B model good enough for your problem — and how would you know?
+
+EGAH approaches this as a capability-boundary problem, rather than a universal model-ranking problem.
+
+A model does not need to be declared universally equivalent to a frontier model.
+
+Instead:
+
+Incoming Task
+      ↓
+Evidence History
+      ↓
+Task Complexity
+      ↓
+┌───────────────┬────────────────┬──────────────────┐
+│ Within        │ Boundary-Near  │ Beyond           │
+│ Boundary      │                │ Boundary         │
+├───────────────┼────────────────┼──────────────────┤
+│ Small Model   │ Human Review   │ Larger Model     │
+│ / Autonomy    │ / Verification │ / Escalation     │
+└───────────────┴────────────────┴──────────────────┘
+
+The supplied research proposes three task classes:
+
+Within-boundary: small model can execute autonomously.
+Boundary-near: verification or human approval is required.
+Beyond-boundary: escalate to a larger model or human intervention.
+
+This reframes small-model deployment from:
+
+"Is 8B as capable as 70B?"
+
+to:
+
+"For which tasks can we establish sufficient evidence that 8B is capable enough, and what should happen when that evidence is insufficient?"
+
+That is a more production-oriented question.
+
+Resource and Outcome Accounting
+
+The approach also considers the relationship between model/resource consumption and the outcome produced.
+
+Traditional AI cost tracking may capture:
+
+Tokens
++
+Compute
++
+API Calls
+=
+Total Cost
+
+EGAH extends this toward:
+
+Resource Consumption
+        +
+Verified Outcome
+        ↓
+Outcome-Value Attribution
+        ↓
+ROI / Efficiency
+        ↓
+Model / Resource Decision
+
+The supplied document explicitly describes this as resource-outcome accounting, linking consumption with verified outcomes rather than measuring consumption alone.
+
+This provides a potential mechanism for comparing:
+
+Small Model
+    ↓
+Lower Cost
+    ↓
+Verified Outcome
+
+versus
+
+Frontier Model
+    ↓
+Higher Cost
+    ↓
+Verified Outcome
+
+The important point is that cost reduction alone is not treated as success. The outcome must remain acceptable for the specific task.
+
+What Would Be Evaluated
+
+The research foundation proposes four technical evaluation dimensions:
+
+1. Evidence checkpoint overhead
+
+Measure additional latency and throughput impact introduced by evidence checkpoints.
+
+2. Recovery correctness
+
+Determine whether evidence state is correctly preserved and restored across crash scenarios.
+
+3. Capability-boundary enforcement
+
+Measure whether task classification correctly identifies when smaller models are sufficient and when escalation is necessary.
+
+4. ROI accuracy
+
+Compare outcome-attributed accounting with traditional consumption-based cost tracking.
+
+These dimensions are explicitly defined in the supplied evaluation methodology.
+
+For a production-oriented talk, these metrics provide a useful framework for discussing the trade-off:
+
+More Verification
+       ↓
+Higher Safety / Evidence Confidence
+       ↓
+Potentially Higher
+Latency + Cost + Complexity
+
+The engineering objective is therefore not maximum verification.
+
+It is appropriate verification at appropriate execution boundaries.
+
+What I Would Share With Practitioners
+
+The talk would focus on the practical lessons rather than presenting EGAH as a finished product.
+
+Lesson 1 — State is not the same as evidence
+
+Persisting graph state does not automatically preserve why a decision was made.
+
+Lesson 2 — Evidence needs lifecycle semantics
+
+An evidence object should have provenance, timing, verification status and applicability rather than being treated as an immutable fact.
+
+Lesson 3 — Verification belongs near consequential boundaries
+
+Not every token, tool call or intermediate step requires the same level of validation.
+
+Lesson 4 — Small models need capability boundaries
+
+The practical question is not whether a small model wins against a frontier model globally, but where it is sufficiently reliable for a defined class of tasks.
+
+Lesson 5 — Recovery needs semantic continuity
+
+After a crash, resuming execution should consider whether the evidence supporting the next action is still valid.
+
+Lesson 6 — Governance should earn its place in the harness
+
+Every additional checkpoint has a cost. Verification should therefore be measurable and tied to an actual reliability, safety or decision-quality requirement.
+
+Lesson 7 — Measure before declaring production readiness
+
+Checkpoint overhead, recovery correctness, boundary accuracy and outcome quality should be measured before additional harness complexity becomes permanent infrastructure.
+
+Intended Audience
+
+This session is intended for engineers and technical leaders who:
+
+build or operate AI agents,
+design agent harnesses and execution graphs,
+work with LangGraph or similar orchestration systems,
+implement tool-using or long-running agents,
+work on agent evaluation and observability,
+deploy or evaluate small language models,
+optimize model cost and latency,
+design checkpoint/recovery mechanisms,
+or are deciding which additional abstractions genuinely belong in a production AI stack.
+
+It is particularly relevant to teams moving from agent prototypes to long-running, tool-using production systems.
+
+Why This Matters Now
+
+The agent stack continues to evolve:
+
+Prompt
+   ↓
+Context
+   ↓
+Harness
+   ↓
+Loop
+   ↓
+Graph
+   ↓
+Persistent State
+
+The next production challenge is not necessarily another abstraction.
+
+It is determining what information the harness must preserve and verify for the agent to remain trustworthy as execution becomes longer, more autonomous and more consequential.
+
+EGAH explores evidence as one such state primitive.
+
+The goal is not to argue that every agent needs a heavyweight governance system. Rather, the objective is to identify where evidence, verification and recovery become part of the core engineering problem and where they can remain lightweight.
+
+Scope and Current Status
+
+This talk will present EGAH as an engineering approach and research direction, not as a claim that a complete production-ready framework has already been validated.
+
+The current research material defines:
+
+the architecture,
+evidence-state model,
+evidence-enhanced execution graph,
+capability-boundary model,
+resource/outcome accounting approach,
+implementation roadmap,
+and evaluation methodology.
+
+The supplied document describes implementation and production validation as subsequent phases, including LangGraph integration, 8B boundary testing and crash-recovery experimentation.
+
+Accordingly, the session will clearly distinguish:
+
+What the architecture proposes
+from
+What has been experimentally demonstrated
+from
+What still needs production validation.
+
+That distinction is particularly important when discussing agent reliability and small-model deployment.
+
+Key Takeaways
+
+Attendees should leave with:
+
+A concrete mental model for evidence as runtime state in an agent harness.
+A practical execution pattern for integrating evidence checkpoints into agent graphs.
+A way to think about crash recovery beyond state restoration, including evidence continuity.
+A framework for defining evidence-backed capability boundaries for small models.
+A method for relating model/resource consumption to verified outcomes rather than cost alone.
+A clearer way to distinguish useful harness infrastructure from additional ceremony.
+A set of engineering metrics for deciding whether evidence and verification mechanisms justify their runtime cost.
+Why this version is stronger for the Fifth Elephant CFP
+
+This draft deliberately keeps the strongest material from the attached paper—evidence as runtime state, evidence checkpoints, crash recovery, small-model boundaries and resource/outcome accounting—while removing the academic-paper structure that would make it feel like a conference-paper pitch.
+
+It also avoids claiming that the proposed framework has already achieved production results that the attached document currently describes as future evaluation. That is important because the CFP specifically asks for hands-on, honest production experience and what worked or did not work, while your source document currently describes several validation activities as planned rather than completed.
+
+Recommended submission title
+
+Evidence-Governed Agent Harnesses: Making Evidence Survive Long-Running Agent Execution
+
+Recommended one-line positioning
+
+What should an agent remember after a crash at step 40 of 60? Not just its state—but what it verified, what it accomplished, and what it is still allowed to do.
+
+This is the version I would use for the Fifth Elephant Hyderabad CFP. It is tightly aligned with the organizers' four themes without trying to force all of your broader AI research into one session.
+
+----
+Evidence-Governed Agent Harnesses
+
+Submitted Aug 25, 2026
+
+Type of submission: 30 mins talk
+
+What should survive when an agent crashes at step 40 of 60?
+
+Long-running agents are usually designed to preserve execution state: graph state, checkpoints, memory, tool results, and workflow progress. But in a production agent, state alone is not enough. The agent may resume at step 40 with its execution state intact while the evidence that justified its next action is stale, incomplete, unverified, or no longer applicable. The harness has remembered where it was, but not necessarily what it knew, what it verified, what it accomplished, or what it is still allowed to do.
+
+This talk explores Evidence-Governed Agent Harnesses (EGAH): an approach that treats evidence as first-class runtime state alongside graph state, checkpoints, memory and tool execution. Instead of treating verification and governance as external layers, the harness introduces evidence checkpoints, evidence envelopes, verification history, outcome attribution and capability boundaries directly into the execution graph.
+
+The core shift is from:
+
+Plan → Tool Call → Result → Next Step
+
+to:
+
+Plan → Evidence Checkpoint → Tool Call → Result Verification → Evidence Update → Next Step
+
+This becomes particularly important for long-running workflows. If an agent crashes at step 40 of 60, conventional checkpoint recovery can restore execution state, but an evidence-governed harness asks additional questions before continuing: Which prerequisites were already verified? When were they verified? What changed while the workflow was interrupted? Which evidence remains valid? What must be revalidated before the next consequential action?
+
+The same approach provides a practical way to reason about small-model deployment. Rather than asking whether a tuned 8B model is universally "good enough", the harness can establish evidence-backed capability boundaries for specific task classes. Tasks within an established boundary can use a smaller model; boundary-near tasks can trigger verification or human review; tasks beyond the boundary can escalate to a larger model or human intervention.
+
+The talk will walk through the harness architecture, evidence-enhanced execution graph, evidence-state model, crash-and-resume scenario, small-model capability boundaries, resource/outcome accounting, and the trade-offs between additional verification and runtime overhead. It will also distinguish clearly between the proposed architecture, implementation experiments, and production validation still required.
+
+The central engineering proposition is simple:
+
+A production agent harness should persist not only where the agent was, but also what the agent knew, what it verified, what it accomplished, and what it is still authorized to do.
+
+Takeaways
+Execution state is not evidence state. A checkpoint can tell an agent where it was without telling it whether the evidence supporting its next action is still valid.
+Make evidence a first-class harness primitive. Capture provenance, observation time, verification status, applicability, outcome and verification history alongside execution state.
+Put verification at consequential boundaries. The answer is not to validate everything. Use stronger verification where stale or incorrect evidence can materially change the outcome.
+Design recovery around semantic continuity. After a crash, resuming the graph should also consider what evidence needs to be revalidated before execution continues.
+Evaluate small models by capability boundaries, not model size alone. Establish where an 8B model is demonstrably sufficient for a defined task class, where verification is needed, and when escalation is appropriate.
+Measure whether the harness earns its complexity. Checkpoint overhead, recovery correctness, capability-boundary accuracy and outcome quality should determine whether an additional harness mechanism belongs in production.
+Audience
+
+Engineers and technical teams building or operating production AI agents, agent harnesses, execution graphs, tool-using agents and long-running workflows.
+
+This includes people working on:
+
+agent orchestration and harness infrastructure
+LangGraph and graph-based agent execution
+tool calling and agent permissions
+checkpointing, persistence and crash recovery
+agent evaluation and observability
+small-model deployment and model routing
+AI inference cost and latency optimization
+RAG and evidence-based agent workflows
+production reliability and AI engineering
+
+It is particularly relevant to teams moving beyond agent demos and asking what needs to change before an agent can reliably execute long-running, tool-using and consequential workflows in production.
+
+Bio
+
+Shaik Khaja Nayab Rasool is an engineering leader and AI practitioner with extensive experience in software engineering, distributed systems, enterprise platforms and AI-enabled applications. His recent work spans AI engineering, agentic AI, RAG, agent harnesses, evaluation, observability, AI resource economics and trustworthy AI execution.
+
+His current research explores how AI systems can move beyond model-level capability toward evidence-driven, observable and accountable agent execution, with particular interest in context and harness engineering, long-running agent workflows, evaluation, resource/outcome attribution and AI governance.
+
+He works across the intersection of software engineering and emerging AI systems, with a focus on understanding which abstractions genuinely improve production reliability, efficiency and trust—and which add complexity without providing measurable value.
+---
+
+Done. I created a rich, editable draw.io architectural workflow for the EGAH topic in a clean black-and-white architecture style.
+
+Download
+
+Download EGAH End-to-End Architectural Workflow (.drawio)
+
+Workflow covered
+User / Business Request
+        ↓
+Context & Task Definition
+        ↓
+┌──────────────────────────────────────────────────────┐
+│              AGENT HARNESS / RUNTIME                 │
+│                                                      │
+│  Plan                                               │
+│    ↓                                                 │
+│  Evidence Checkpoint                                 │
+│    ↓                                                 │
+│  Assurance / Policy Gate                             │
+│    ↓                                                 │
+│  Evidence Sufficient?                                │
+│     ├── YES → ACT                                    │
+│     ├── STALE → REFRESH                              │
+│     ├── UNCERTAIN → ASK                              │
+│     └── UNSAFE → ABSTAIN                             │
+│                                                      │
+│  Durable State + Evidence State + Observability      │
+└──────────────────────────────────────────────────────┘
+        ↓
+External Tools / Systems
+        ↓
+Changing External World
+        ↓
+Result / Evidence
+        ↓
+Verification
+        ↓
+Next Step
+
+It also explicitly models the Step 40/60 crash scenario:
+
+Crash → Recovery Controller → Restore Execution + Evidence + Verification History → Recheck → Safe Resume
+
+and ends with:
+
+Verified Outcome + Cost + Evidence + Authorization + Audit Trail
+
+The .drawio file is fully editable in diagrams.net / draw.io, so you can rearrange nodes, add your implementation components, or adapt it directly into the Fifth Elephant presentation.
+---
+Rendered EGAH Architecture
+
+Open / download the high-resolution PNG
+
+The rendered diagram follows the editable .drawio architecture and shows the complete flow:
+
+Request → Planning → Evidence Checkpoint → Assurance/Policy Gate → ACT / REFRESH / ASK / ABSTAIN → Tools & External World → Evidence/Outcome → Observability
+
+with the critical Step 40/60 crash → Recovery Controller → Evidence + State restoration → Safe Resume path explicitly represented.
+---
+
+Subject: Request to Consider Late Submission – Fifth Elephant Hyderabad CFP
+
+Hello Zainab,
+
+I hope you are doing well.
+
+I noticed that the submissions for the Fifth Elephant Hyderabad – Agent Harnesses & Small Models in Production CFP have now closed. I was unfortunately unable to submit my proposal within the stipulated timeline due to a system issue, which took some time to resolve.
+
+I understand that the submission deadline was 25 August 2026 at 11:59 PM, and that submissions are currently closed.
+
+I would be grateful if you could kindly consider my submission, if there is any possibility of accepting a late proposal.
+
+The proposed session is titled:
+
+“Evidence-Governed Agent Harnesses: Making Evidence Survive Long-Running Agent Execution”
+
+The talk focuses on a production-oriented problem in long-running agent systems: preserving not only execution state across failures, but also the evidence, verification history, authorization state and outcome context required to safely resume execution. It also explores evidence-backed capability boundaries for small-model deployment.
+
+I have prepared the complete abstract and supporting material in line with the CFP requirements.
+
+I completely understand if the submission cannot be accommodated due to the closure of the CFP or the review process already being underway. Nevertheless, I would sincerely appreciate it if the proposal could be considered should there be any flexibility.
+
+Submission page:
+Fifth Elephant Hyderabad CFP Submission Page
+
+Thank you very much for your time and consideration.
+
+Warm regards,
+Shaik Khaja Nayab Rasool
+---
+
+For the Fifth Elephant CFP, I would submit the EGAH architectural workflow diagram — the black-and-white end-to-end Evidence-Governed Agent Harness architecture — along with the document.
+
+It is the strongest single visual because it immediately communicates the entire production story:
+
+Request → Agent Harness → Evidence Checkpoint → Policy/Assurance Gate → ACT / REFRESH / ASK / ABSTAIN → Tools/External World → Crash → Recovery → Safe Resume → Verified Outcome
+
+Why this one
+Visual  Suitability Reason
+EGAH End-to-End Architectural Workflow  ⭐⭐⭐⭐⭐   Directly explains the proposed production architecture
+Evidence-envelope diagram   ⭐⭐⭐⭐    Excellent supporting visual, but narrower
+Step-40/60 crash-recovery flow  ⭐⭐⭐⭐⭐   Excellent CFP hook, but only covers one aspect
+Small-model capability-boundary diagram ⭐⭐⭐⭐    Strong because CFP explicitly mentions 8B models
+OVAR/resource-value diagrams    ⭐⭐  Less directly aligned with this CFP
+If you can attach only one
+
+Use the EGAH End-to-End Architectural Workflow.
+
+EGAH End-to-End Architectural Workflow — PNG
+
+It gives the reviewer an immediate architectural understanding before they read the abstract.
+
+If you can attach two
+
+Use:
+
+EGAH End-to-End Architectural Workflow — overall architecture
+Step-40/60 Crash → Evidence-Aware Recovery — the memorable production problem
+
+That combination is particularly strong because the first answers "what are you proposing?", while the second answers "why does it matter in production?"
+
+I would not attach the OVAR visuals for this submission. They dilute the very strong positioning around agent harnesses, long-running execution, evidence, recovery, evaluation and small-model boundaries.
+---
+I cross-verified it against the original EGAH architecture. Conceptually, yes—the clean version contains the same intended architecture, but visually it is NOT yet clean enough for submission.
+
+What is preserved
+
+The clean version correctly retains the core EGAH workflow:
+
+User / Business Request
+→ Context & Task Definition
+→ Agent Harness / Orchestration Runtime
+
+Inside the harness:
+
+Durable State + Evidence State + Observability
+→ Plan
+→ Evidence Checkpoint
+→ Assurance / Policy Gate
+→ Evidence sufficient?
+
+Then:
+
+YES → ACT
+STALE / INSUFFICIENT → REFRESH
+UNCERTAIN / HIGH IMPACT → ASK
+UNSAFE / UNAUTHORIZED → ABSTAIN
+
+And the critical recovery path:
+
+Crash / Timeout / Interruption — Step 40 of 60
+→ Recovery Controller
+→ Restore Execution + Evidence + Verification History
+→ Safe Resume
+
+Finally:
+
+Verified Outcome & Decision Record
+
+So from a research/content standpoint, it is faithful to the EGAH concept.
+
+But I would NOT use this image yet
+
+I can see several remaining visual collisions, particularly around:
+
+PLAN
+EVIDENCE CHECKPOINT
+ASSURANCE / POLICY GATE
+the decision diamond
+dashed state/evidence arrows
+external tool feedback
+recovery arrows
+
+For example, labels such as "Graph State", "Checkpoint State", "Evidence State", "Telemetry / Cost" are visually crossing the main execution boxes. The ACT/REFRESH/ASK area also has overlapping labels.
+
+So my assessment is:
+
+Aspect  Status
+Research concept    ✅ Same
+Architecture    ✅ Same
+EGAH terminology    ✅ Same
+Step 40/60 recovery ✅ Same
+Evidence-first principle    ✅ Same
+Architectural completeness  ✅
+Visual readability  ❌
+CFP submission quality  ⚠️ Not yet
+
+I would not attach this particular rendered PNG to the CFP.
+
+The architecture itself is good; the problem is purely the diagram layout/routing. The best version should have zero crossing arrows through boxes and zero overlapping labels, with the main execution path visually dominant and state/evidence/telemetry shown as clean side/control-plane relationships.
+---
+
+The attached version is much better, but I would make one important architectural correction: ACT should feed results/evidence back into the Evidence Checkpoint, while failure should go to Recovery and then back to the Checkpoint—not directly to the Verified Record. Also, the final record should represent the verified outcome/decision, not a failure itself.
+
+I regenerated the diagram accordingly.
+
+Final production-accurate version
+
+Download the refined EGAH architectural workflow PNG
+
+The corrected architecture is:
+
+Request → Context → Plan → Evidence Checkpoint → Policy Gate → Sufficiency Decision
+
+Then:
+
+YES → ACT → Tools/World → Results → Evidence Update → Checkpoint
+STALE → REFRESH → Checkpoint
+UNCERTAIN / HIGH IMPACT → ASK → Policy Gate
+UNSAFE / UNAUTHORIZED → ABSTAIN → Decision Record
+Failure anywhere → Recovery Controller → Restore State + Evidence + Verification → Checkpoint
+Successful execution → Verified Outcome / Decision Record
+
+This is a more defensible representation of the EGAH research proposition and is the version I would use for the Fifth Elephant submission and presentation.
+
+---
+
+Yes — and this is a very important challenge to address before submitting the paper/talk.
+
+The short answer is:
+
+EGAH is not fundamentally an observability framework. It can—and should—use existing observability frameworks such as OpenTelemetry, Langfuse, Phoenix, Datadog, etc. as its telemetry/monitoring layer.
+
+The research distinction is that observability tells you what happened; EGAH uses durable, verified evidence to determine what the agent is allowed to do next.
+
+That distinction should become explicit in your paper and presentation.
+
+1. What existing observability already does
+
+Modern AI observability has become quite sophisticated.
+
+For example, OpenTelemetry's GenAI conventions can capture model calls, token usage, latency, tool calls and, when enabled, prompts, completions, tool arguments and results.
+
+Likewise, Langfuse can trace:
+
+LLM generations
+tool calls
+agents
+retrieval
+chains
+evaluators
+tokens
+cost
+latency
+quality scores
+
+and can attach evaluations to individual operations.
+
+So if EGAH merely says:
+
+"Let's log evidence, tool calls, tokens, verification and outcomes."
+
+then it is not sufficiently novel.
+
+That would largely be an observability/telemetry implementation.
+
+2. The real distinction
+
+Think of the two systems this way:
+
+Observability
+Agent
+  │
+  ├── LLM call
+  ├── Tool call
+  ├── Retrieval
+  ├── Token usage
+  ├── Latency
+  └── Result
+       │
+       ▼
+  Telemetry
+       │
+       ▼
+OpenTelemetry / Langfuse / Datadog / Phoenix
+       │
+       ▼
+Human / Evaluation / Dashboard
+
+The primary question is:
+
+"What happened?"
+
+EGAH
+Agent
+  │
+  ▼
+Evidence Checkpoint
+  │
+  ├── What do we know?
+  ├── Where did it come from?
+  ├── Is it still valid?
+  ├── Was it verified?
+  ├── What outcome does it support?
+  ├── Is the action authorized?
+  └── Is model capability sufficient?
+          │
+          ▼
+     POLICY DECISION
+          │
+    ┌─────┼──────┐
+    ▼     ▼      ▼
+   ACT  REFRESH  ASK
+                 │
+                 ▼
+              ABSTAIN
+
+The primary question is:
+
+"Given what we know and have verified, what should the agent be allowed to do next?"
+
+That is the crucial distinction.
+
+3. The most important architectural distinction
+
+I would actually change the terminology in your architecture.
+
+Currently you have:
+
+STATE
+EVIDENCE
+TELEMETRY
+
+This could make reviewers think:
+
+"Evidence is just another telemetry stream."
+
+Instead, make the architecture explicitly:
+
+                 EGAH RUNTIME
+┌────────────────────────────────────────────────────────┐
+│                                                        │
+│  DURABLE EXECUTION STATE                               │
+│  Graph • Checkpoints • Memory • Recovery State         │
+│                                                        │
+│  DURABLE EVIDENCE STATE                                │
+│  Provenance • Validity • Verification • Authorization  │
+│                                                        │
+│  POLICY / DECISION CONTROL                             │
+│  Continue • Refresh • Escalate • Abstain              │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+             │
+             │ telemetry
+             ▼
+┌────────────────────────────────────────────────────────┐
+│              OBSERVABILITY PLANE                       │
+│                                                        │
+│ OpenTelemetry / Langfuse / Phoenix / Datadog / etc.   │
+│ Traces • Logs • Metrics • Tokens • Cost • Latency      │
+└────────────────────────────────────────────────────────┘
+
+This is much stronger.
+
+Observability becomes something EGAH plugs into, rather than something EGAH tries to replace.
+
+4. Why logs are not enough
+
+This is where your research can become genuinely interesting.
+
+Suppose an agent retrieves:
+
+Customer account balance = ₹50,000
+
+Observability records:
+
+Tool: get_balance()
+Timestamp: 10:32
+Result: ₹50,000
+Latency: 240ms
+
+Excellent.
+
+But now imagine the agent crashes for three hours.
+
+When it resumes:
+
+Observability asks:
+
+What happened at 10:32?
+
+EGAH asks:
+
+Can the 10:32 evidence still justify the action I am about to perform at 13:35?
+
+That's a different problem.
+
+The distinction is:
+
+Observability   EGAH
+Records execution   Governs continuation
+Primarily diagnostic    Decision-bearing
+Logs events Maintains evidence state
+Shows what happened Determines what remains valid
+Usually asynchronous    Part of execution control
+Supports debugging  Supports action authorization
+Telemetry   Durable evidence
+Retrospective   Prospective
+"What happened?"    "What can happen next?"
+
+And this is exactly where your Step 40/60 crash example becomes powerful.
+
+5. The Step-40/60 example makes the difference obvious
+
+Suppose:
+
+Step 01 → Retrieve customer data
+Step 10 → Verify identity
+Step 20 → Calculate recommendation
+Step 30 → Check policy
+Step 40 → CRASH
+...
+Step 60 → Execute consequential action
+
+Observability may have a perfect trace:
+
+Trace #ABC123
+
+Step 01 ✓
+Step 10 ✓
+Step 20 ✓
+Step 30 ✓
+Step 40 ✗
+
+You can inspect it beautifully in Langfuse or another observability platform.
+
+But when the system restarts:
+
+Can we safely continue?
+
+The answer cannot simply be:
+
+"The trace says Step 30 passed."
+
+EGAH introduces:
+
+Evidence validity
+       +
+Evidence freshness
+       +
+Verification history
+       +
+Authorization
+       +
+Current external state
+       +
+Task/model capability
+       ↓
+CONTINUATION DECISION
+
+Therefore:
+
+             CRASH
+               │
+               ▼
+       Restore execution state
+               │
+               +
+       Restore evidence state
+               │
+               ▼
+       Revalidate evidence
+               │
+        ┌──────┴──────┐
+        ▼             ▼
+     VALID          STALE
+        │             │
+        ▼             ▼
+     RESUME         REFRESH
+
+That is much more defensible as your research contribution.
+
+6. Existing observability can actually strengthen EGAH
+
+This is important.
+
+Don't position EGAH against OpenTelemetry/Langfuse.
+
+Position it on top of / alongside them.
+
+For example:
+
+                    EGAH RUNTIME
+                         │
+          ┌──────────────┼──────────────┐
+          │              │              │
+          ▼              ▼              ▼
+     State Store    Evidence Store   Policy Engine
+          │              │              │
+          └──────────────┼──────────────┘
+                         │
+                    Agent Actions
+                         │
+        ┌────────────────┼────────────────┐
+        │                │                │
+       LLM             Tools           Retrieval
+        │                │                │
+        └────────────────┼────────────────┘
+                         │
+                         ▼
+                OpenTelemetry
+                         │
+          ┌──────────────┼──────────────┐
+          ▼              ▼              ▼
+       Langfuse       Phoenix        Datadog
+
+OpenTelemetry is particularly appropriate as the telemetry interchange layer because its GenAI conventions already cover model calls, tokens, tool invocations and related telemetry.
+
+Langfuse similarly provides hierarchical traces containing LLM calls, tools, retrieval and other operations, plus cost and evaluation capabilities.
+
+So your claim becomes:
+
+EGAH is observability-compatible rather than observability-replacing.
+
+7. There is an even deeper distinction: telemetry ≠ authoritative state
+
+This is probably the strongest refinement to your research.
+
+Do not make:
+
+Evidence = logs
+
+Instead:
+
+Telemetry
+   ↓
+Observation
+   ↓
+Evidence Candidate
+   ↓
+Verification
+   ↓
+Durable Evidence
+   ↓
+Policy Decision
+
+For example:
+
+Tool Result
+    │
+    ▼
+Telemetry Event
+    │
+    ▼
+Evidence Candidate
+    │
+    ├── provenance?
+    ├── freshness?
+    ├── integrity?
+    ├── applicability?
+    ├── authorization?
+    └── verification?
+           │
+           ▼
+    DURABLE EVIDENCE
+           │
+           ▼
+    POLICY DECISION
+
+This gives you a very strong research proposition:
+
+Not every observation is evidence, and not every piece of evidence is sufficient for action.
+
+That is much more interesting than "AI observability."
+
+8. This also fixes a potential weakness in your current paper
+
+Your current EGAH material talks about:
+
+evidence
+telemetry
+resource consumption
+outcomes
+verification
+authorization
+recovery
+
+The danger is that a reviewer could say:
+
+"Isn't this just observability + evaluation + policy enforcement?"
+
+That's a legitimate question.
+
+Your answer should be:
+
+No — because EGAH introduces a lifecycle:
+OBSERVE
+   ↓
+CAPTURE
+   ↓
+VERIFY
+   ↓
+PERSIST
+   ↓
+ASSESS VALIDITY
+   ↓
+AUTHORIZE / REJECT
+   ↓
+EXECUTE
+   ↓
+UPDATE EVIDENCE
+   ↓
+RECOVER / REVALIDATE
+   ↓
+CONTINUE
+
+Observability is primarily the observation layer.
+
+EGAH proposes an evidence-to-action control loop.
+
+9. Your research novelty should therefore be rewritten
+
+I would avoid claiming:
+
+"EGAH introduces evidence-aware observability."
+
+Too weak.
+
+Instead:
+
+"EGAH explores an evidence-governed execution model in which verified evidence becomes durable, decision-bearing runtime state used by the agent harness to determine continuation, refresh, escalation, abstention and recovery."
+
+That is considerably stronger.
+
+And your central research question becomes:
+
+How should an agent harness represent, validate, persist and revalidate evidence so that evidence—not merely execution state or telemetry—can govern whether a long-running agent is allowed to continue?
+
+That is a legitimate research question with substantial future scope.
+
+10. This gives you a much broader PhD direction
+
+This is where I think your original long-term research direction becomes interesting.
+
+You can eventually investigate:
+
+Evidence lifecycle
+Observation
+     ↓
+Evidence
+     ↓
+Validation
+     ↓
+Evidence freshness
+     ↓
+Evidence decay
+     ↓
+Revalidation
+Evidence-aware recovery
+Checkpoint
+     ↓
+Crash
+     ↓
+Restore
+     ↓
+Evidence validity analysis
+     ↓
+Selective revalidation
+     ↓
+Resume / Escalate / Abort
+Evidence-aware model routing
+Task
+ ↓
+Evidence
+ ↓
+Uncertainty
+ ↓
+Capability boundary
+ ↓
+Small Model
+      OR
+Frontier Model
+      OR
+Human
+Evidence-aware tokenomics
+Tokens
+ +
+Tool Calls
+ +
+Retrieval
+ +
+Compute
+      ↓
+Evidence
+      ↓
+Verified Outcome
+      ↓
+Value
+Evidence-aware agent evaluation
+
+Instead of merely:
+
+Did the agent produce a good answer?
+
+you eventually ask:
+
+Did the agent:
+
+✓ use sufficient evidence?
+✓ use valid evidence?
+✓ preserve evidence across recovery?
+✓ verify evidence before consequential action?
+✓ choose an appropriate model?
+✓ produce the intended outcome?
+✓ spend resources proportionately?
+
+That's a much broader research program.
+
+11. One change I strongly recommend to your diagram
+
+Your current diagram says:
+
+TELEMETRY
+
+inside the EGAH runtime.
+
+I would change that.
+
+Instead:
+┌──────────────────────────────────────────────────────────┐
+│                    EGAH RUNTIME                          │
+│                                                          │
+│  DURABLE STATE      DURABLE EVIDENCE      POLICY ENGINE  │
+│  ─────────────      ───────────────      ─────────────  │
+│  Graph state        Provenance           Authorization   │
+│  Checkpoints        Validity             Risk            │
+│  Memory             Verification         Capability      │
+│  Recovery state     Freshness            Decision        │
+│                                                          │
+│                 AGENT EXECUTION                          │
+└──────────────────────────────────────────────────────────┘
+                         │
+                         │ telemetry
+                         ▼
+┌──────────────────────────────────────────────────────────┐
+│                 OBSERVABILITY PLANE                      │
+│ OpenTelemetry / Langfuse / Phoenix / Datadog / etc.     │
+│                                                          │
+│ Traces • Logs • Metrics • Tokens • Cost • Latency        │
+└──────────────────────────────────────────────────────────┘
+
+That single architectural change makes the research boundary much clearer.
+
+Bottom line
+
+Your instinct is correct: current observability frameworks already cover a large portion of the logging/telemetry problem. OpenTelemetry now explicitly supports GenAI telemetry, including model calls, token usage, tool calls and agent traces, while platforms such as Langfuse provide full agent traces, evaluations, cost and quality monitoring.
+
+Therefore:
+
+Do not position EGAH as a new observability framework.
+
+Position it as:
+
+An evidence-governed runtime/control layer that consumes observability signals but turns verified, durable evidence into decisions about agent continuation, recovery, escalation and authorization.
+
+The cleanest one-line distinction for your Fifth Elephant talk is:
+
+"Observability tells us what happened. EGAH asks whether what happened is still sufficient evidence for what the agent is about to do."
+
+That is the distinction I would build the entire paper, architecture diagram and 30-minute talk around.
+
+For word copy
+                 EGAH RUNTIME
+┌────────────────────────────────────────────────────────┐
+│                                                        │
+│  DURABLE EXECUTION STATE                               │
+│  Graph • Checkpoints • Memory • Recovery State         │
+│                                                        │
+│  DURABLE EVIDENCE STATE                                │
+│  Provenance • Validity • Verification • Authorization  │
+│                                                        │
+│  POLICY / DECISION CONTROL                             │
+│  Continue • Refresh • Escalate • Abstain               │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+             │
+             │ telemetry
+             ▼
+┌────────────────────────────────────────────────────────┐
+│              OBSERVABILITY PLANE                       │
+│                                                        │
+│ OpenTelemetry / Langfuse / Phoenix / Datadog / etc.    │
+│ Traces • Logs • Metrics • Tokens • Cost • Latency      │
+└────────────────────────────────────────────────────────┘
+                 EGAH RUNTIME
+┌────────────────────────────────────────────────────────┐
+│                                                        │
+│  DURABLE EXECUTION STATE                               │
+│  Graph • Checkpoints • Memory • Recovery State         │
+│                                                        │
+│  DURABLE EVIDENCE STATE                                │
+│  Provenance • Validity • Verification • Authorization  │
+│                                                        │
+│  POLICY / DECISION CONTROL                             │
+│  Continue • Refresh • Escalate • Abstain               │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+             │
+             │ telemetry
+             ▼
+┌────────────────────────────────────────────────────────┐
+│              OBSERVABILITY PLANE                       │
+│                                                        │
+│ OpenTelemetry / Langfuse / Phoenix / Datadog / etc.    │
+│ Traces • Logs • Metrics • Tokens • Cost • Latency      │
+└────────────────────────────────────────────────────────┘
+For LinkedIn project portfolio under profile.
+
+For a LinkedIn Project Portfolio, I would make it much more concise and professional than the architecture block. You want the project to communicate the research contribution and distinction from observability immediately.
+
+Recommended LinkedIn Project
+
+Project name
+Evidence-Governed Agent Harness (EGAH)
+
+Description
+
+Research and architecture initiative exploring an evidence-governed runtime for long-running AI agents.
+
+EGAH treats durable evidence as first-class runtime state, complementing—not replacing—existing AI observability frameworks.
+
+Core architecture:
+• Durable Execution State — graph state, checkpoints, memory and recovery state
+• Durable Evidence State — provenance, validity, verification and authorization
+• Policy / Decision Control — continue, refresh, escalate or abstain
+• Observability Integration — OpenTelemetry, Langfuse, Phoenix, Datadog and similar platforms
+
+Key research question:
+How can an agent determine whether the evidence available at a given point remains sufficient and valid for its next action, particularly after interruption, state recovery or changes in the external world?
+
+The work focuses on agent harness engineering, evidence-aware execution, long-running agent recovery, evaluation, authorization, observability and safe continuation.
+
+Core principle:
+Observability tells us what happened. EGAH asks whether what happened is still sufficient evidence for what the agent is about to do.
+
+Even shorter version for LinkedIn
+
+If LinkedIn's project description space/visibility makes the above too long, I would use this:
+
+Evidence-Governed Agent Harness (EGAH) — Research and architecture initiative for long-running AI agents that treats durable evidence as first-class runtime state.
+
+EGAH combines durable execution state, evidence provenance/validity/verification, policy-based continuation, recovery and abstention, while integrating with existing observability platforms such as OpenTelemetry, Langfuse, Phoenix and Datadog.
+
+Research focus: evidence-aware agent execution, crash recovery, verification, authorization, evaluation, observability and safe continuation.
+
+Principle: Observability tells us what happened; EGAH determines whether what happened is still sufficient evidence for what the agent is about to do.
+
+

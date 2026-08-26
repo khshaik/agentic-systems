@@ -1,0 +1,67 @@
+# Virtual environment
+.venv/
+venv/
+env/
+.python-version
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+*.whl
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environment variables (contains secrets)
+.env
+
+# Database (runtime-generated)
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+._*
+
+# Streamlit
+.streamlit/
+
+# Pytest / Coverage
+.pytest_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# mypy / type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ruff / Linting
+.ruff_cache/
+
+# Jupyter (if notebooks added later)
+.ipynb_checkpoints/
+
+# Logs
+*.log
