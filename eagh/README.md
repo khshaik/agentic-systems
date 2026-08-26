@@ -13,15 +13,7 @@ Evidence checkpoints · Crash recovery · Evidence-governed continuation · Veri
 ![pytest](https://img.shields.io/badge/pytest-35_tests-0A9EDC?style=flat&logo=pytest&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat)
 
-[Demo](#demo) · [Problem](#problem-statement) · [Solution](#solution-approach) · [10-Step Example](#the-10-step-example) · [Architecture](#architecture) · [Quick Start](#quick-start) · [Commands](#commands-reference) · [Structure](#project-structure) · [Modules](#source-modules)
-
----
-
-## Demo
-
-[![EGAH PoC Demo](https://img.youtube.com/vi/voH1QFXdlkE/maxresdefault.jpg)](https://youtu.be/voH1QFXdlkE)
-
-▶️ **[Watch the demo on YouTube](https://youtu.be/voH1QFXdlkE)** — Evidence-governed crash recovery in under 3 minutes.
+[Problem](#problem-statement) · [Solution](#solution-approach) · [Architecture](#architecture) · [10-Step Example](#the-10-step-example) · [Quick Start](#quick-start) · [Commands](#commands-reference) · [Structure](#project-structure) · [Modules](#source-modules) · [Demo](#demo)
 
 ---
 
@@ -105,6 +97,54 @@ On crash recovery, EGAH:
 
 ---
 
+## Architecture
+
+![EGAH End-to-End Workflow](resources/images/architecture/07_egah_end_to_end_workflow.png)
+
+The EGAH runtime sits between the request/context layer and the observability plane. It manages three core subsystems:
+
+- **State** — durable execution state: graph position, checkpoints, memory, recovery state
+- **Evidence** — durable evidence state: provenance, validity, verification status, authorization
+- **Telemetry** — resource accounting: tokens, cost, latency per step
+
+```
+┌────────────────────────────────────────────────────────┐
+│                    EGAH RUNTIME                         │
+├────────────────────────────────────────────────────────┤
+│                                                        │
+│  DURABLE EXECUTION STATE                               │
+│  Graph state · Checkpoints · Memory · Recovery state   │
+│                                                        │
+│  DURABLE EVIDENCE STATE                                │
+│  Provenance · Validity · Verification · Authorization  │
+│                                                        │
+│  POLICY / DECISION CONTROL                             │
+│  ACT · REFRESH · ASK · ABSTAIN                         │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+                        │ telemetry
+                        ▼
+┌────────────────────────────────────────────────────────┐
+│               OBSERVABILITY PLANE                      │
+│  OpenTelemetry / Langfuse / Phoenix / Datadog / etc.  │
+│  Traces · Logs · Metrics · Tokens · Cost · Latency     │
+└────────────────────────────────────────────────────────┘
+```
+
+The execution flow follows: **Plan → Checkpoint → Policy Gate → Sufficient?**
+
+| Policy Gate Outcome | Action | Description |
+|---------------------|--------|-------------|
+| **YES** (sufficient) | `ACT` | Evidence is fresh and verified — proceed with tool execution |
+| **STALE** | `REFRESH` | Evidence exists but is expired or invalidated — re-acquire before proceeding |
+| **NO** (insufficient) | `ASK` → `ESCALATE` | Evidence is missing or unverifiable — escalate to human or larger model |
+| **FAILURE** | `RECOVERY` → `SAFE RESUME` | Crash detected — restore evidence state, analyse validity, then resume safely |
+| **Beyond boundary** | `ABSTAIN` | Agent lacks capability or authorization — halt without acting |
+
+Every action, verification, and recovery decision flows into a **Verified Record**, providing full audit continuity from request to outcome.
+
+---
+
 ## The 10-Step Example
 
 ### Normal Execution (no crash)
@@ -180,34 +220,6 @@ The PoC demonstrates in a single end-to-end flow:
 - The PoC agent does **not** use an external database, vector store, message queue or container orchestration. SQLite provides zero-setup durable persistence.
 - The LLM is **optional**. The demo runs fully in simulated mode without an API key, producing realistic document-analysis outputs.
 - Observability platforms (OpenTelemetry, Langfuse, Datadog) are **not bundled**. EGAH is designed to integrate with them, not replace them. The PoC focuses on the evidence-governance layer above telemetry.
-
----
-
-## Architecture
-
-```
-┌────────────────────────────────────────────────────────┐
-│                    EGAH RUNTIME                         │
-├────────────────────────────────────────────────────────┤
-│                                                        │
-│  DURABLE EXECUTION STATE                               │
-│  Graph state · Checkpoints · Memory · Recovery state   │
-│                                                        │
-│  DURABLE EVIDENCE STATE                                │
-│  Provenance · Validity · Verification · Authorization  │
-│                                                        │
-│  POLICY / DECISION CONTROL                             │
-│  ACT · REFRESH · ASK · ABSTAIN                         │
-│                                                        │
-└────────────────────────────────────────────────────────┘
-                        │ telemetry
-                        ▼
-┌────────────────────────────────────────────────────────┐
-│               OBSERVABILITY PLANE                      │
-│  OpenTelemetry / Langfuse / Phoenix / Datadog / etc.  │
-│  Traces · Logs · Metrics · Tokens · Cost · Latency     │
-└────────────────────────────────────────────────────────┘
-```
 
 ---
 
@@ -685,3 +697,11 @@ A production agent harness should persist not only *where* the agent was, but al
 | Shows what happened | Determines what remains valid |
 | Retrospective | Prospective |
 | *"What happened?"* | *"What can happen next?"* |
+
+---
+
+## Demo
+
+[![EGAH PoC Demo](https://img.youtube.com/vi/voH1QFXdlkE/maxresdefault.jpg)](https://youtu.be/voH1QFXdlkE)
+
+▶️ **[Watch the demo on YouTube](https://youtu.be/voH1QFXdlkE)** — Evidence-governed crash recovery in under 3 minutes.
