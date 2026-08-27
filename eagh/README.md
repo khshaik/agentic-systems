@@ -677,7 +677,7 @@ It consumes the same telemetry signals but turns verified, durable evidence into
 
 ## Research
 
-**Shaik Khaja Nayab Rasool**
+**Khaja Shaik**
 
 *Evidence-Governed Agent Harnesses: Making Evidence Survive Long-Running Agent Execution*
 
